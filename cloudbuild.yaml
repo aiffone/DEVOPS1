@@ -30,7 +30,7 @@ steps:
       - TF_VAR_project_id=$PROJECT_ID
 
 # Specify the logs bucket
-logsBucket: "gs://your-logs-bucket"
+logsBucket: "gs://my-build-logs-bucket"
 
 substitutions:
   _PROJECT_ID: "infra1-430721"
