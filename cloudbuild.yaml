@@ -1,33 +1,27 @@
 steps:
-  # Step 1: Install Terraform
   - name: hashicorp/terraform:latest
     entrypoint: 'sh'
     args:
       - '-c'
       - |
-        # Install terraform
         curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -
         apt-add-repository "deb https://apt.releases.hashicorp.com $(lsb_release -cs) main"
         apt-get update && apt-get install terraform -y
 
-  # Step 2: Initialize Terraform
   - name: hashicorp/terraform:latest
     args:
       - init
 
-  # Step 3: Validate Terraform configuration
   - name: hashicorp/terraform:latest
     args:
       - validate
 
-  # Step 4: Plan Terraform execution
   - name: hashicorp/terraform:latest
     args:
       - plan
     env:
       - TF_VAR_project_id=$PROJECT_ID
 
-  # Step 5: Apply Terraform configuration (optional, comment out if not needed)
   - name: hashicorp/terraform:latest
     args:
       - apply
@@ -35,12 +29,12 @@ steps:
     env:
       - TF_VAR_project_id=$PROJECT_ID
 
-# Substitutions can be added if needed, for example:
+# Specify the logs bucket
+logsBucket: "gs://your-logs-bucket"
+
 substitutions:
   _PROJECT_ID: "infra1-430721"
 
-# Optionally, specify the timeout for the build (default is 10m).
 timeout: "1200s"
 
-# Optionally, specify the service account to be used for the build.
-# serviceAccount: projects/PROJECT_ID/serviceAccounts/SERVICE_ACCOUNT_EMAIL
+serviceAccount: projects/PROJECT_ID/serviceAccounts/SERVICE_ACCOUNT_EMAIL
